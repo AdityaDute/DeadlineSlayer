@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "Goal": {
+      "title": "Goal",
+      "description": "Represents an operational track or goal created by the user",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the goal"
+        },
+        "description": {
+          "type": "string",
+          "description": "The detailed description of the goal"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The owner's Firebase Authentication UID"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "When the goal was created"
+        }
+      },
+      "required": ["name", "userId"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Represents a subtask under a specific goal",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the task"
+        },
+        "quadrant": {
+          "type": "integer",
+          "description": "The Eisenhower Matrix quadrant (1-4)"
+        },
+        "priority": {
+          "type": "string",
+          "description": "Priority level of the task"
+        },
+        "estimatedMinutes": {
+          "type": "integer",
+          "description": "Estimated duration of the task in minutes"
+        },
+        "category": {
+          "type": "string",
+          "description": "Category classification of the task"
+        },
+        "status": {
+          "type": "string",
+          "description": "Operational status of the task"
+        },
+        "goalId": {
+          "type": "string",
+          "description": "The ID of the parent Goal"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The owner's Firebase Authentication UID"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "When the task was created"
+        }
+      },
+      "required": ["name", "quadrant", "priority", "estimatedMinutes", "category", "status", "goalId", "userId"]
+    },
+    "AgentAction": {
+      "title": "AgentAction",
+      "description": "Logs of agent behaviors and user-triggered orchestrations",
+      "type": "object",
+      "properties": {
+        "agent": {
+          "type": "string",
+          "description": "Name of the agent"
+        },
+        "action": {
+          "type": "string",
+          "description": "Action performed"
+        },
+        "details": {
+          "type": "string",
+          "description": "Stringified or raw JSON details"
+        },
+        "userId": {
+          "type": "string",
+          "description": "The user's Firebase Authentication UID"
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "ISO string timestamp"
+        }
+      },
+      "required": ["agent", "action", "userId", "timestamp"]
+    }
+  },
+  "firestore": {
+    "goals/{goalId}": {
+      "schema": "Goal",
+      "description": "User operational goals"
+    },
+    "tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Eisenhower task pipeline associated with goals"
+    },
+    "agentActions/{actionId}": {
+      "schema": "AgentAction",
+      "description": "Logs of actions executed by the agent for each user"
+    }
+  }
+}

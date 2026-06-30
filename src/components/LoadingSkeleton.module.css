@@ -1,0 +1,82 @@
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: var(--background-start);
+  border-radius: 20px;
+}
+
+.logoGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: pulse 2.5s infinite ease-in-out;
+}
+
+.logoIcon {
+  color: var(--accent-blue);
+  fill: var(--accent-blue);
+  filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+}
+
+.logoText {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+}
+
+.logoText span {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.progressBarWrapper {
+  width: 240px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progressBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 50%;
+  background: var(--accent-gradient);
+  border-radius: 10px;
+  animation: slide 1.5s infinite ease-in-out;
+}
+
+.loadingText {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: var(--accent-blue);
+  animation: blink 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.02); opacity: 1; }
+}
+
+@keyframes slide {
+  0% { left: -50%; }
+  100% { left: 100%; }
+}
+
+@keyframes blink {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}

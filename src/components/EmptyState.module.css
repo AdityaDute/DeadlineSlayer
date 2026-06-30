@@ -1,0 +1,105 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed var(--card-border);
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 1.5rem auto;
+}
+
+.iconCircle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.glowIcon {
+  color: var(--accent-blue);
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.5));
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.description strong {
+  color: var(--accent-blue);
+  font-weight: 600;
+}
+
+.suggestionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.suggestionCard {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: left;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.suggestionCard:hover {
+  border-color: var(--card-hover-border);
+  background: rgba(59, 130, 246, 0.05);
+  transform: translateY(-1px);
+}
+
+.suggestionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.flameColor {
+  color: var(--danger-red);
+}
+
+.terminalColor {
+  color: var(--accent-purple);
+}
+
+.shieldColor {
+  color: var(--success-green);
+}
+
+.suggestionLabel {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.suggestionText {
+  font-size: 0.825rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-style: italic;
+}

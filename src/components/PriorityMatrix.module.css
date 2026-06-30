@@ -1,0 +1,386 @@
+.matrixContainer {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.matrixHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.matrixTitleGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.matrixTitle {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.matrixSubtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.prioritizeBtn {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+}
+
+.prioritizeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.spin {
+  animation: loadingSpin 1.2s linear infinite;
+}
+
+@keyframes loadingSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.matrixGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.quadrant {
+  border-radius: var(--radius-md);
+  padding: 16px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.quadrant:hover {
+  transform: scale(1.01);
+  filter: brightness(1.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Specific Quadrant Colors */
+.doFirst {
+  background: rgba(239, 68, 68, 0.08);
+  border-left: 3px solid var(--danger);
+}
+.schedule {
+  background: rgba(79, 140, 255, 0.08);
+  border-left: 3px solid var(--accent-blue);
+}
+.delegate {
+  background: rgba(245, 158, 11, 0.08);
+  border-left: 3px solid var(--warning);
+}
+.minimize {
+  background: rgba(100, 116, 139, 0.08);
+  border-left: 3px solid var(--text-muted);
+}
+
+.quadrantHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quadTitle {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.taskBadge {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #ffffff;
+}
+
+.dotRed { background: var(--danger); }
+.dotBlue { background: var(--accent-blue); }
+.dotWarning { background: var(--warning); }
+.dotMuted { background: var(--text-muted); }
+
+.taskList {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-grow: 1;
+}
+
+.emptyState {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  margin: auto;
+  font-style: italic;
+}
+
+.pillsWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -4px;
+}
+
+.taskPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  animation: pillFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pillFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.taskPill:hover {
+  border-color: var(--glass-border-hover);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.selectedPill {
+  border-color: var(--accent-blue) !important;
+  box-shadow: 0 0 12px rgba(79, 140, 255, 0.4);
+  color: #ffffff !important;
+  background: rgba(79, 140, 255, 0.15) !important;
+}
+
+.completedPill {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+/* Deadline proximity indicator dots */
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.green {
+  background-color: var(--success);
+  box-shadow: 0 0 6px var(--success);
+}
+
+.yellow {
+  background-color: var(--warning);
+  box-shadow: 0 0 6px var(--warning);
+}
+
+.red {
+  background-color: var(--danger);
+  box-shadow: 0 0 6px var(--danger);
+  animation: pulseRed 1s infinite alternate;
+}
+
+@keyframes pulseRed {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
+
+.pillText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+/* Detailed Information Tooltip / Drawer */
+.detailDrawer {
+  background: rgba(6, 9, 20, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  animation: slideDownIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideDownIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.drawerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.drawerTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.drawerTitle {
+  font-family: var(--font-heading), sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.drawerPriority {
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.drawerClose {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.drawerClose:hover {
+  color: #ffffff;
+}
+
+.drawerDesc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.drawerMetaRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.drawerMetaItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drawerExecuteBtn {
+  margin-left: auto;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-family: var(--font-heading), sans-serif;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.drawerExecuteBtn:hover {
+  opacity: 0.95;
+}
+
+.drawerSlain {
+  margin-left: auto;
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Temporary highlight animation for linked TaskCard below */
+.temporaryHighlight {
+  animation: cardHighlight 1.5s ease-out;
+}
+
+@keyframes cardHighlight {
+  0% {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px rgba(79, 140, 255, 0.4);
+  }
+  100% {
+    border-color: var(--glass-border);
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .matrixGrid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,85 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net default-deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Goal entity schema validation
+    function isValidGoal(data) {
+      return data.keys().hasAll(['name', 'userId'])
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 200
+        && data.userId is string && data.userId.size() <= 128
+        && (data.get('description', '') is string && data.get('description', '').size() <= 1000)
+        && (data.get('createdAt', null) == null || data.createdAt is timestamp);
+    }
+
+    // Task entity schema validation
+    function isValidTask(data) {
+      return data.keys().hasAll(['name', 'quadrant', 'priority', 'estimatedMinutes', 'category', 'status', 'goalId', 'userId'])
+        && data.name is string && data.name.size() > 0 && data.name.size() <= 200
+        && data.quadrant is int && data.quadrant >= 1 && data.quadrant <= 4
+        && data.priority is string && (data.priority == 'High' || data.priority == 'Medium' || data.priority == 'Low')
+        && data.estimatedMinutes is int && data.estimatedMinutes >= 0 && data.estimatedMinutes <= 10000
+        && data.category is string && data.category.size() <= 100
+        && data.status is string && (data.status == 'Pending' || data.status == 'Completed')
+        && data.goalId is string && data.goalId.size() <= 128
+        && data.userId is string && data.userId.size() <= 128
+        && (data.get('createdAt', null) == null || data.createdAt is timestamp);
+    }
+
+    // AgentAction entity schema validation
+    function isValidAgentAction(data) {
+      return data.keys().hasAll(['agent', 'action', 'userId', 'timestamp'])
+        && data.agent is string && data.agent.size() <= 200
+        && data.action is string && data.action.size() <= 200
+        && data.userId is string && data.userId.size() <= 128
+        && data.timestamp is string && data.timestamp.size() <= 100
+        && (data.get('details', '') is string && data.get('details', '').size() <= 50000);
+    }
+
+    // Goals Collection
+    match /goals/{goalId} {
+      allow get, list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidGoal(incoming());
+      allow update: if isSignedIn() && existing().userId == request.auth.uid && incoming().userId == request.auth.uid && isValidGoal(incoming());
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // Tasks Collection
+    match /tasks/{taskId} {
+      allow get, list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidTask(incoming())
+        && exists(/databases/$(database)/documents/goals/$(incoming().goalId))
+        && get(/databases/$(database)/documents/goals/$(incoming().goalId)).data.userId == request.auth.uid;
+      allow update: if isSignedIn() && existing().userId == request.auth.uid && incoming().userId == request.auth.uid && isValidTask(incoming())
+        && incoming().diff(existing()).affectedKeys().hasOnly(['status']);
+      allow delete: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // AgentActions Collection
+    match /agentActions/{actionId} {
+      allow get, list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidAgentAction(incoming());
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "DeadlineSlayer",
+  "description": "An AI-powered multi-agent productivity rescue system that slays deadlines and executes runways.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
