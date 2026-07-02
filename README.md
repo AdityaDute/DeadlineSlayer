@@ -75,4 +75,3 @@ NEXT_PUBLIC_FIREBASE_APP_ID="YOUR_APP_ID"
 GEMINI_API_KEY="YOUR_GEMINI_API_KEY"
 ```
 
-*Note: In the Google AI Studio container environment, `GEMINI_API_KEY` is injected automatically.*
